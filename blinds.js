@@ -12,6 +12,8 @@ class BlindController {
         this.motorStopped = 0;
 
         this.motorInterval;
+
+        this.positionReported;
     }
 
     startOpen() {
@@ -41,7 +43,7 @@ class BlindController {
 
         clearInterval(this.motorInterval);
 
-        console.log("Current position: " + this.currentPosition);
+        this.reportPosition();
     }
 
     startClose() {
@@ -71,7 +73,7 @@ class BlindController {
 
         clearInterval(this.motorInterval);
 
-        console.log("Current position: " + this.currentPosition);
+        this.reportPosition();
     }
 
     openFully() {
@@ -108,6 +110,14 @@ class BlindController {
 
             this.currentPosition -= 100;
         }, 100);
+    }
+
+    reportPosition() {
+        console.log("Current position: " + this.currentPosition);
+
+        if (this.positionReported) {
+            this.positionReported(this.currentPosition);
+        }
     }
 }
 

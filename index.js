@@ -20,7 +20,11 @@ function handler(req, res) { //create server
   });
 }
 
-io.sockets.on('connection', function (socket) {// WebSocket Connection
+io.sockets.on('connection', function (socket) {
+  blinds.positionReported = function(position) {
+    socket.emit('positionReported', position);
+  }
+
   socket.on('startOpen', function (data) {
     blinds.startOpen();
   });
@@ -43,6 +47,10 @@ io.sockets.on('connection', function (socket) {// WebSocket Connection
 
   socket.on('closeFully', function (data) {
     blinds.closeFully();
+  });
+
+  socket.on('clientReady', function() {
+    blinds.reportPosition();
   });
 });
 

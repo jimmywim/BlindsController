@@ -4,6 +4,9 @@
 <body>
     <h1>Window Blind Controller</h1>
     <div>
+        Position: <span id="position"></span>
+    </div>
+    <div>
         <h2>Nudge Blinds</h2>
         <div>
             <button id="open">Open Blinds</button>
@@ -54,6 +57,13 @@
             closeFullyButton.addEventListener("click", function () {
                 socket.emit("closeFully", undefined);
             });
+
+            var positionElem = document.getElementById("position");
+            socket.on('positionReported', (position) => {
+                positionElem.innerText = position;
+            });
+
+            socket.emit('clientReady', undefined);
         });
     </script>
 

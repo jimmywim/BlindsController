@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>Window Blind Controller</h1>
+    <div>
+        <h2>Nudge Blinds</h2>
+        <div>
+            <button id="open">Open Blinds</button>
+        </div>
+        <div>
+            <button id="close">Close Blinds</button>
+        </div>
+    </div>
+    <div>
+        <div>
+            <button id="openFully">Open Blinds Fully</button>
+        </div>
+        <div>
+            <button id="closeFully">Close Blinds Fully</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <!-- include socket.io client side script -->
+    <script>
+        var socket = io(); //load socket.io-client and connect to the host that serves the page
+        window.addEventListener("load", function () {
+            var openButton = document.getElementById("open");
+            var closeButton = document.getElementById("close");
+
+            openButton.addEventListener("mousedown", function () {
+                socket.emit("startOpen", undefined);
+            });
+
+            openButton.addEventListener("mouseup", function () {
+                socket.emit("stopOpen", undefined);
+            });
+
+            closeButton.addEventListener("mousedown", function () {
+                socket.emit("startClose", undefined);
+            });
+
+            closeButton.addEventListener("mouseup", function () {
+                socket.emit("stopClose", undefined);
+            });
+
+            var openFullyButton = document.getElementById("openFully");
+            var closeFullyButton = document.getElementById("closeFully");
+
+            openFullyButton.addEventListener("click", function () {
+                socket.emit("openFully", undefined);
+            });
+
+            closeFullyButton.addEventListener("click", function () {
+                socket.emit("closeFully", undefined);
+            });
+        });
+    </script>
+
+</html>
+</body>
+
+</html>

@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+    <style>
+        input[type=range][orient=vertical]
+        {
+            writing-mode: bt-lr; /* IE */
+            -webkit-appearance: slider-vertical; /* WebKit */
+            width: 8px;
+            height: 175px;
+            padding: 0 5px;
+        }
+
+        #nudge, #changeFully, #currentPositionPanel {
+            display: inline-block;
+        }
+    </style>
+</head>
+
 <body>
     <h1>Window Blind Controller</h1>
-    <div>
-        Position: <span id="position"></span>
-    </div>
-    <div>
+    <div id="nudge">
         <h2>Nudge Blinds</h2>
         <div>
             <button id="open">Open Blinds</button>
@@ -15,12 +29,19 @@
             <button id="close">Close Blinds</button>
         </div>
     </div>
-    <div>
+    <div id="changeFully">
+        <h2>Open or Close Fully</h2>
         <div>
             <button id="openFully">Open Blinds Fully</button>
         </div>
         <div>
             <button id="closeFully">Close Blinds Fully</button>
+        </div>
+    </div>
+    <div id="currentPositionPanel">
+        Position: <span id="position"></span>
+        <div>
+            <input id="positionSlider" type="range" min="0" max="0" value="0" disabled="disabled" orient="vertical" />
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
@@ -59,11 +80,21 @@
             });
 
             var positionElem = document.getElementById("position");
+            var positionSliderElem = document.getElementById("positionSlider");
+
             socket.on('positionReported', (position) => {
                 positionElem.innerText = position;
+                positionSliderElem.value = position;
+            });
+            socket.on('blindStateReady', (state) => {
+                positionSliderElem.max = state.maxPosition;
+                positionSliderElem.value = state.position;
+                positionElem.innerText = state.position;
             });
 
             socket.emit('clientReady', undefined);
+
+
         });
     </script>
 

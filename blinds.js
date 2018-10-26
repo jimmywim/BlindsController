@@ -34,6 +34,7 @@ class BlindController {
             }
 
             this.currentPosition += 100;
+            this.reportPosition();
         }, 100);
     }
 
@@ -64,6 +65,7 @@ class BlindController {
             }
 
             this.currentPosition -= 100;
+            this.reportPosition();
         }, 100);
     }
 
@@ -91,6 +93,7 @@ class BlindController {
             }
 
             this.currentPosition += 100;
+            this.reportPosition();
         }, 100);
     }
 
@@ -109,6 +112,7 @@ class BlindController {
             }
 
             this.currentPosition -= 100;
+            this.reportPosition();
         }, 100);
     }
 
@@ -117,6 +121,13 @@ class BlindController {
 
         if (this.positionReported) {
             this.positionReported(this.currentPosition);
+        }
+    }
+
+    currentState() {
+        return {
+            position: this.currentPosition,
+            maxPosition: this.fullDuration
         }
     }
 }

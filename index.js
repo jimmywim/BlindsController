@@ -50,7 +50,8 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('clientReady', function() {
-    blinds.reportPosition();
+    var state = blinds.currentState();
+    socket.emit('blindStateReady', state);
   });
 });
 

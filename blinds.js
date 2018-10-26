@@ -116,6 +116,11 @@ class BlindController {
         }, 100);
     }
 
+    stop() {
+        clearInterval(this.motorInterval);
+        this.reportPosition();
+    }
+
     reportPosition() {
         console.log("Current position: " + this.currentPosition);
 

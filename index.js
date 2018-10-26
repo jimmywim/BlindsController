@@ -49,6 +49,10 @@ io.sockets.on('connection', function (socket) {
     blinds.closeFully();
   });
 
+  socket.on('stop', function(data) {
+    blinds.stop();
+  })
+
   socket.on('clientReady', function() {
     var state = blinds.currentState();
     socket.emit('blindStateReady', state);

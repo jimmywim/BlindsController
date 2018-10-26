@@ -37,6 +37,9 @@
         <div>
             <button id="closeFully">Close Blinds Fully</button>
         </div>
+        <div>
+            <button id="stop">Stop</button>
+        </div>
     </div>
     <div id="currentPositionPanel">
         Position: <span id="position"></span>
@@ -51,6 +54,7 @@
         window.addEventListener("load", function () {
             var openButton = document.getElementById("open");
             var closeButton = document.getElementById("close");
+            var stopButton = document.getElementById("stop");
 
             openButton.addEventListener("mousedown", function () {
                 socket.emit("startOpen", undefined);
@@ -67,6 +71,10 @@
             closeButton.addEventListener("mouseup", function () {
                 socket.emit("stopClose", undefined);
             });
+
+            stopButton.addEventListener("click", function() {
+                socket.emit("stop", undefined);
+            })
 
             var openFullyButton = document.getElementById("openFully");
             var closeFullyButton = document.getElementById("closeFully");

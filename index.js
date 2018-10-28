@@ -43,7 +43,7 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('openFully', function (data) {
     blinds.openFully();
-  })
+  });
 
   socket.on('closeFully', function (data) {
     blinds.closeFully();
@@ -51,6 +51,14 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('stop', function(data) {
     blinds.stop();
+  });
+
+  socket.on('setMin', function(data) {
+    blinds.setMin();
+  });
+
+  socket.on('setMax', function(data) {
+    blinds.setMax();
   })
 
   socket.on('clientReady', function() {

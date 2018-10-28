@@ -121,6 +121,16 @@ class BlindController {
         this.reportPosition();
     }
 
+    setMin() {
+        this.currentPosition = 0;
+        this.reportPosition();
+    }
+
+    setMax() {
+        this.fullDuration = this.currentPosition;
+        this.reportPosition();
+    }
+
     reportPosition() {
         console.log("Current position: " + this.currentPosition);
 

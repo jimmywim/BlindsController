@@ -41,12 +41,23 @@
             <button id="stop">Stop</button>
         </div>
     </div>
+    <div id="calibrationPanel">
+
+        <button id="calibrate" onClick="javascript:toggleCalibrationButtons()">Calibrate</button>
+        <div id="calibrationButtons" style="visibility: hidden">
+            <div>Close the blinds fully first using the Nudge buttons, then click Set Closed.</div>
+            <div>Then, fully open the blinds using the Nudge buttons and click Set Open</div>
+            <button id="setMin" onClick="javascript:setMin()">Set Closed</button>
+            <button id="setMax" onClick="javascript:setMax()" disabled>Set Open</button>
+        </div>
+    </div>
     <div id="currentPositionPanel">
         Position: <span id="position"></span>
         <div>
             <input id="positionSlider" type="range" min="0" max="0" value="0" disabled="disabled" orient="vertical" />
         </div>
     </div>
+    <div id="statusPanel"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
     <!-- include socket.io client side script -->
     <script>
@@ -72,7 +83,7 @@
                 socket.emit("stopClose", undefined);
             });
 
-            stopButton.addEventListener("click", function() {
+            stopButton.addEventListener("click", function () {
                 socket.emit("stop", undefined);
             })
 
@@ -104,6 +115,35 @@
 
 
         });
+
+        function toggleCalibrationButtons() {
+            var calibrationButtonContainer = document.getElementById("calibrationButtons");
+            if (calibrationButtonContainer.style.visibility === "hidden") {
+                calibrationButtonContainer.style.visibility = "visible";
+            } else {
+                calibrationButtonContainer.style.visibility = "hidden";
+            }
+        }
+
+        function setMin() {
+            socket.emit("setMin");
+            updateStatus("Blinds set to fully closed");
+            var setMaxbutton = document.getElementById("setMax");
+            setMaxbutton.disabled = false;
+        }
+
+        function setMax() {
+            socket.emit("setMax");
+            updateStatus("Blinds set to fully open");
+
+            var calibrationButtonContainer = document.getElementById("calibrationButtons");
+            calibrationButtonContainer.style.visibility = "hidden";
+        }
+
+        function updateStatus(message) {
+            var statusPanel = document.getElementById("statusPanel");
+            statusPanel.innerText = message;
+        }
     </script>
 
 </html>
